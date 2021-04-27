@@ -1,8 +1,9 @@
 #!python3
-from typing import List
-from enum import Enum
-from marshmallow import Schema, fields, post_load
 from datetime import datetime
+from enum import Enum
+from typing import List
+
+from marshmallow import Schema, fields, post_load
 from pytz import timezone
 
 
@@ -80,6 +81,7 @@ class SettleType(Enum):
     OPEN = 'OPEN'
     CLOSE = 'CLOSE'
 
+
 class OrderStatus(Enum):
     """
     注文ステータスを示します。
@@ -101,6 +103,15 @@ class TimeInForce(Enum):
     FAS = 'FAS'
     FOK = 'FOK'
     SOK = 'SOK'
+
+
+class MarginCallStatus(Enum):
+    """
+    追証ステータスを表示します。
+    """
+    NORMAL = 'NORMAL'
+    MARGIN_CALL = 'MARGIN_CALL'
+    LOSSCUT = 'LOSSCUT'
 
 
 class BaseSchema(Schema):
@@ -132,6 +143,7 @@ class BaseResponse:
     """
     ベースレスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime) -> None:
         """
         コンストラクタです。
@@ -152,13 +164,15 @@ class BaseResponseSchema(BaseSchema):
     """
     __model__ = BaseResponse
     status = fields.Int(data_key='status')
-    responsetime = fields.DateTime(format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='responsetime')
+    responsetime = fields.DateTime(
+        format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='responsetime')
 
 
 class Message:
     """
     メッセージクラスです。
     """
+
     def __init__(self, message_code: str, message_string: str) -> None:
         """
         コンストラクタです。
@@ -171,6 +185,7 @@ class Message:
         """
         self.message_code = message_code
         self.message_string = message_string
+
 
 class MessageSchema(BaseSchema):
     """
@@ -185,6 +200,7 @@ class ErrorResponse(BaseResponse):
     """
     メッセージレスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: str,  messages: List[Message]) -> None:
         """
         コンストラクタです。
