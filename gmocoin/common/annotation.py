@@ -7,7 +7,7 @@ from .exception import GmoCoinException
 from .dto import ErrorResponseResSchema
 
 
-def post_request(Schema, interval: float=0.5, retry_count: int=10):
+def post_request(Schema, interval: float = 0.5, retry_count: int = 10):
     """
     リクエスト後の処理を実施するラッパー関数。
         ステータス200のチェック
@@ -59,13 +59,13 @@ def post_request(Schema, interval: float=0.5, retry_count: int=10):
                     if res_json['messages'][0]['message_code'] == 'ERR-5003':
                         sleep(interval)
                     else:
-                        raise GmoCoinException(ret.status_code, 
+                        raise GmoCoinException(ret.status_code,
                                                messageg=ErrorResponseResSchema().load(res_json))
                 else:
                     return Schema().load(res_json)
 
             if res_json['status'] != 0:
-                raise GmoCoinException(ret.status_code, 
+                raise GmoCoinException(ret.status_code,
                                        messageg=ErrorResponseResSchema().load(res_json))
 
         return wrapper

@@ -1,3 +1,4 @@
+
 #!python3
 import requests
 import json
@@ -215,7 +216,9 @@ class Client:
 
         headers = self._create_header(method='POST', path=path, req_body=req_body)
 
-        return requests.post(GMOConst.END_POINT_PRIVATE + path, headers=headers, data=json.dumps(req_body))
+        res = requests.post(GMOConst.END_POINT_PRIVATE + path, headers=headers, data=json.dumps(req_body))
+        print(res)
+        return res
 
     @log(logger)
     @post_request(BaseResponseSchema)
