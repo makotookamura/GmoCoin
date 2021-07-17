@@ -46,6 +46,10 @@ class AssetSymbol(Enum):
     BAT = 'BAT'
     OMG = 'OMG'
     XTZ = 'XTZ'
+    QTUM = 'QTUM'
+    ENJ = 'ENJ'
+    DOT = 'DOT'
+    ATOM = 'ATOM'
 
 
 class SalesSide(Enum):

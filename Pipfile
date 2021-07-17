@@ -18,6 +18,7 @@ requests = "*"
 marshmallow = "*"
 marshmallow-enum = "*"
 pandas = "*"
+pytest-watch = "*"
 
 [requires]
 python_version = "3.8"
