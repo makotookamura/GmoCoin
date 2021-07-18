@@ -21,7 +21,8 @@ class Test:
 
     def test_get_margin(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
         res = client.get_margin()
 
         assert type(res.status) is int
@@ -29,6 +30,8 @@ class Test:
         assert type(res.data.actual_profit_loss) is Decimal
         assert type(res.data.available_amount) is Decimal
         assert type(res.data.margin) is Decimal
+        assert type(res.data.margin_call_status) is str
+        assert type(res.data.margin_ratio) is Decimal
         assert type(res.data.profit_loss) is Decimal
 
         print(res.status)
@@ -40,7 +43,8 @@ class Test:
 
     def test_get_assets(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
         res = client.get_assets()
 
         assert type(res.status) is int
@@ -61,10 +65,11 @@ class Test:
 
     def test_get_active_orders(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
 
-        res = client.order(symbol=Symbol.BTC_JPY, 
-                           side=SalesSide.BUY, 
+        res = client.order(symbol=Symbol.BTC_JPY,
+                           side=SalesSide.BUY,
                            execution_type=ExecutionType.LIMIT,
                            time_in_force=TimeInForce.FAS,
                            price=str(TestConst.ORDER_PRICE),
@@ -119,7 +124,8 @@ class Test:
 
     def test_get_latest_executions(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
 
         res = client.get_latest_executions(symbol=Symbol.BTC_JPY)
 
@@ -161,7 +167,8 @@ class Test:
 
     def test_get_position_summary(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
         res = client.get_position_summary(symbol=Symbol.XRP_JPY)
 
         assert type(res.status) is int
@@ -190,9 +197,10 @@ class Test:
 
     def test_order_change_and_cancel(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
-        res = client.order(symbol=Symbol.BTC_JPY, 
-                           side=SalesSide.BUY, 
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        res = client.order(symbol=Symbol.BTC_JPY,
+                           side=SalesSide.BUY,
                            execution_type=ExecutionType.LIMIT,
                            time_in_force=TimeInForce.FAS,
                            price=str(TestConst.ORDER_PRICE),
@@ -207,7 +215,8 @@ class Test:
         print(res.data)
 
         time.sleep(TestConst.API_CALL_INTERVAL)
-        res = client.change_order(res.data, price=str(TestConst.ORDER_PRICE+10000), losscut_price=str(TestConst.ORDER_LOSSCUT_PRICE))
+        res = client.change_order(res.data, price=str(
+            TestConst.ORDER_PRICE+10000), losscut_price=str(TestConst.ORDER_LOSSCUT_PRICE))
         assert type(res.status) is int
         assert type(res.responsetime) is datetime
         print(res.status)
@@ -222,9 +231,10 @@ class Test:
 
     def test_order_and_cancel(self):
         time.sleep(TestConst.API_CALL_INTERVAL)
-        client = Client(api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
-        res = client.order(symbol=Symbol.BTC_JPY, 
-                           side=SalesSide.BUY, 
+        client = Client(
+            api_key=self._api_conf['API_KEY'], secret_key=self._api_conf['SECRET_KEY'])
+        res = client.order(symbol=Symbol.BTC_JPY,
+                           side=SalesSide.BUY,
                            execution_type=ExecutionType.LIMIT,
                            time_in_force=TimeInForce.FAS,
                            price=str(TestConst.ORDER_PRICE),

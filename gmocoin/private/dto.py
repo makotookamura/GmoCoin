@@ -16,6 +16,7 @@ class GetMarginData:
     """
     余力情報データクラスです。
     """
+
     def __init__(self, actual_profit_loss: Decimal, available_amount: Decimal, margin: Decimal, margin_call_status: MarginCallStatus, margin_ratio: Decimal, profit_loss: Decimal) -> None:
         """
         コンストラクタです。
@@ -50,7 +51,8 @@ class GetMarginDataSchema(BaseSchema):
     actual_profit_loss = fields.Decimal(data_key='actualProfitLoss')
     available_amount = fields.Decimal(data_key='availableAmount')
     margin = fields.Decimal(data_key='margin')
-    margin_call_status = EnumField(MarginCallStatus, data_key='marginCallStatus')
+    margin_call_status = EnumField(
+        MarginCallStatus, data_key='marginCallStatus')
     margin_ratio = fields.Decimal(data_key='marginRatio')
     profit_loss = fields.Decimal(data_key='profitLoss')
 
@@ -59,6 +61,7 @@ class GetMarginRes(BaseResponse):
     """
     余力情報レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: GetMarginData) -> None:
         """
         コンストラクタです。
@@ -87,6 +90,7 @@ class GetAssetsData:
     """
     資産残高データクラスです。
     """
+
     def __init__(self, amount: Decimal, available: Decimal, conversion_rate: Decimal, symbol: AssetSymbol) -> None:
         """
         コンストラクタです。
@@ -122,6 +126,7 @@ class GetAssetsRes(BaseResponse):
     """
     資産残高レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: GetAssetsData) -> None:
         """
         コンストラクタです。
@@ -150,6 +155,7 @@ class ActiveOrdersPagenation:
     """
     有効注文一覧ページングデータクラスです。
     """
+
     def __init__(self, current_page: int, count: int) -> None:
         """
         コンストラクタです。
@@ -177,7 +183,8 @@ class ActiveOrder:
     """
     有効注文一覧クラスです。
     """
-    def __init__(self, root_order_id: int, order_id: int, symbol: Symbol, side: SalesSide, order_type: OrderType, 
+
+    def __init__(self, root_order_id: int, order_id: int, symbol: Symbol, side: SalesSide, order_type: OrderType,
                  execution_type: ExecutionType, settle_type: SettleType, size: Decimal, executed_size: Decimal,
                  price: Decimal, losscut_price: Decimal, status: OrderStatus, time_in_force: TimeInForce, timestamp: datetime) -> None:
         """
@@ -197,7 +204,7 @@ class ActiveOrder:
             execution_type:
                 注文タイプ: MARKET LIMIT STOP
             settle_type:
-            	決済区分: OPEN CLOSE
+                決済区分: OPEN CLOSE
             size:
                 発注数量
             executed_size:
@@ -248,14 +255,16 @@ class ActiveOrderSchema(BaseSchema):
     losscut_price = fields.Decimal(data_key='losscutPrice')
     status = EnumField(OrderStatus, data_key='status')
     time_in_force = EnumField(TimeInForce, data_key='timeInForce')
-    timestamp = fields.DateTime(format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='timestamp')
+    timestamp = fields.DateTime(
+        format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='timestamp')
 
 
 class GetActiveOrdersData:
     """
     有効注文一覧データクラスです。
     """
-    def __init__(self, pagination: ActiveOrdersPagenation=None, active_orders: List[ActiveOrder]=None) -> None:
+
+    def __init__(self, pagination: ActiveOrdersPagenation = None, active_orders: List[ActiveOrder] = None) -> None:
         """
         コンストラクタです。
 
@@ -274,14 +283,17 @@ class GetActiveOrdersDataSchema(BaseSchema):
     有効注文一覧データスキーマクラスです。
     """
     __model__ = GetActiveOrdersData
-    pagination = fields.Nested(ActiveOrdersPagenationSchema, data_key='pagination')
-    active_orders = fields.Nested(ActiveOrderSchema, data_key='list', many=True)
+    pagination = fields.Nested(
+        ActiveOrdersPagenationSchema, data_key='pagination')
+    active_orders = fields.Nested(
+        ActiveOrderSchema, data_key='list', many=True)
 
 
 class GetActiveOrdersRes(BaseResponse):
     """
     有効注文一覧レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: GetActiveOrdersData) -> None:
         """
         コンストラクタです。
@@ -310,6 +322,7 @@ class LatestExecutionsPagenation:
     """
     最新約定一覧ページングデータクラスです。
     """
+
     def __init__(self, current_page: int, count: int) -> None:
         """
         コンストラクタです。
@@ -337,7 +350,8 @@ class LatestExecution:
     """
     最新約定クラスです。
     """
-    def __init__(self, execution_id: int, order_id: int, symbol: Symbol, side: SalesSide, settle_type: SettleType, 
+
+    def __init__(self, execution_id: int, order_id: int, symbol: Symbol, side: SalesSide, settle_type: SettleType,
                  size: Decimal, price: Decimal, loss_gain: Decimal, fee: Decimal, timestamp: datetime) -> None:
         """
         コンストラクタです。
@@ -391,14 +405,16 @@ class LatestExecutionSchema(BaseSchema):
     price = fields.Decimal(data_key='price')
     loss_gain = fields.Decimal(data_key='lossGain')
     fee = fields.Decimal(data_key='fee')
-    timestamp = fields.DateTime(format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='timestamp')
+    timestamp = fields.DateTime(
+        format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='timestamp')
 
 
 class GetLatestExecutionsData:
     """
     最新約定一覧データクラスです。
     """
-    def __init__(self, pagination: LatestExecutionsPagenation=None, latest_executions: List[LatestExecution]=None) -> None:
+
+    def __init__(self, pagination: LatestExecutionsPagenation = None, latest_executions: List[LatestExecution] = None) -> None:
         """
         コンストラクタです。
 
@@ -417,14 +433,17 @@ class GetLatestExecutionsDataSchema(BaseSchema):
     最新約定一覧データスキーマクラスです。
     """
     __model__ = GetLatestExecutionsData
-    pagination = fields.Nested(LatestExecutionsPagenationSchema, data_key='pagination')
-    latest_executions = fields.Nested(LatestExecutionSchema, data_key='list', many=True)
+    pagination = fields.Nested(
+        LatestExecutionsPagenationSchema, data_key='pagination')
+    latest_executions = fields.Nested(
+        LatestExecutionSchema, data_key='list', many=True)
 
 
 class GetLatestExecutionsRes(BaseResponse):
     """
     最新約定一覧レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: GetLatestExecutionsData) -> None:
         """
         コンストラクタです。
@@ -453,6 +472,7 @@ class PositionSummary:
     """
     建玉サマリークラスです。
     """
+
     def __init__(self, average_position_rate: Decimal, position_loss_gain: Decimal, side: SalesSide,
                  sum_order_quantity: Decimal, sum_position_quantity: Decimal, symbol: Symbol) -> None:
         """
@@ -497,7 +517,8 @@ class GetPositionSummaryData:
     """
     建玉サマリーデータクラスです。
     """
-    def __init__(self, position_summarys: List[PositionSummary]=[]) -> None:
+
+    def __init__(self, position_summarys: List[PositionSummary] = []) -> None:
         """
         コンストラクタです。
 
@@ -515,13 +536,15 @@ class GetPositionSummaryDataSchema(BaseSchema):
     建玉サマリーデータスキーマクラスです。
     """
     __model__ = GetPositionSummaryData
-    position_summarys = fields.Nested(PositionSummarySchema, data_key='list', many=True, allow_none=True)
+    position_summarys = fields.Nested(
+        PositionSummarySchema, data_key='list', many=True, allow_none=True)
 
 
 class GetPositionSummaryRes(BaseResponse):
     """
     建玉サマリーレスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: str, data: GetPositionSummaryData) -> None:
         """
         コンストラクタです。
@@ -550,6 +573,7 @@ class PostOrderRes(BaseResponse):
     """
     新規注文レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: int) -> None:
         """
         コンストラクタです。
@@ -578,6 +602,7 @@ class PostCloseOrderRes(BaseResponse):
     """
     決済注文レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: int) -> None:
         """
         コンストラクタです。
@@ -606,6 +631,7 @@ class PostCloseBulkOrderRes(BaseResponse):
     """
     一括決済注文レスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime, data: int) -> None:
         """
         コンストラクタです。

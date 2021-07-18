@@ -85,6 +85,7 @@ class SettleType(Enum):
     OPEN = 'OPEN'
     CLOSE = 'CLOSE'
 
+
 class OrderStatus(Enum):
     """
     注文ステータスを示します。
@@ -144,6 +145,7 @@ class BaseResponse:
     """
     ベースレスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: datetime) -> None:
         """
         コンストラクタです。
@@ -164,13 +166,15 @@ class BaseResponseSchema(BaseSchema):
     """
     __model__ = BaseResponse
     status = fields.Int(data_key='status')
-    responsetime = fields.DateTime(format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='responsetime')
+    responsetime = fields.DateTime(
+        format='%Y-%m-%dT%H:%M:%S.%fZ', data_key='responsetime')
 
 
 class Message:
     """
     メッセージクラスです。
     """
+
     def __init__(self, message_code: str, message_string: str) -> None:
         """
         コンストラクタです。
@@ -183,6 +187,7 @@ class Message:
         """
         self.message_code = message_code
         self.message_string = message_string
+
 
 class MessageSchema(BaseSchema):
     """
@@ -197,6 +202,7 @@ class ErrorResponse(BaseResponse):
     """
     メッセージレスポンスクラスです。
     """
+
     def __init__(self, status: int, responsetime: str,  messages: List[Message]) -> None:
         """
         コンストラクタです。
