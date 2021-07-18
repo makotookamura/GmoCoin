@@ -108,6 +108,13 @@ class TimeInForce(Enum):
     FOK = 'FOK'
     SOK = 'SOK'
 
+class MarginCallStatus(Enum):
+    """
+    追証ステータスを示します。
+    """
+    NORMAL = "NORMAL"
+    MARGIN_CALL = "MARGIN_CALL"
+    LOSSCUT = "LOSSCUT"
 
 class BaseSchema(Schema):
     """

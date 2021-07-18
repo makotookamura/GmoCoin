@@ -9,7 +9,7 @@ from decimal import Decimal
 
 from ..common.dto import BaseSchema, BaseResponse, BaseResponseSchema, \
     Symbol, AssetSymbol, SalesSide, OrderType, ExecutionType, SettleType, \
-    OrderStatus, TimeInForce
+    OrderStatus, TimeInForce, MarginCallStatus
 
 
 class GetMarginData:
@@ -17,7 +17,7 @@ class GetMarginData:
     余力情報データクラスです。
     """
 
-    def __init__(self, actual_profit_loss: Decimal, available_amount: Decimal, margin: Decimal, margin_call_status: str, margin_ratio: Decimal, profit_loss: Decimal) -> None:
+    def __init__(self, actual_profit_loss: Decimal, available_amount: Decimal, margin: Decimal, margin_call_status: MarginCallStatus, margin_ratio: Decimal, profit_loss: Decimal) -> None:
         """
         コンストラクタです。
 
@@ -28,6 +28,10 @@ class GetMarginData:
                 取引余力
             margin:
                 拘束証拠金
+            margin_call_status:
+                追証ステータス: NORMAL MARGIN_CALL LOSSCUT
+            margin_ratio:
+                証拠金維持率
             profit_loss:
                 評価損益
         """
@@ -47,7 +51,8 @@ class GetMarginDataSchema(BaseSchema):
     actual_profit_loss = fields.Decimal(data_key='actualProfitLoss')
     available_amount = fields.Decimal(data_key='availableAmount')
     margin = fields.Decimal(data_key='margin')
-    margin_call_status = fields.String(data_key='marginCallStatus')
+    margin_call_status = EnumField(
+        MarginCallStatus, data_key='marginCallStatus')
     margin_ratio = fields.Decimal(data_key='marginRatio')
     profit_loss = fields.Decimal(data_key='profitLoss')
 
